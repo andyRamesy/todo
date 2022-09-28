@@ -1,24 +1,28 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 require("dotenv").config({ path: "./config/.env" });
 require("./config/db.js");
 
 //create app
 const app = express();
-
-app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header(
-		"Access-Control-Allow-Methods",
-		"GET,HEAD,OPTIONS,POST,PUT,DELETE"
-	);
-	res.header(
-		"Access-Control-Allow-Headers",
-		"auth-token,Origin, X-Requested-With, Content-Type, Accept"
-	);
-	next();
-});
+const corsOptions = {
+	origin: ["http://192.168.2.183:8080", "http://localhost:8080"],
+	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
+// app.use(function (req, res, next) {
+// 	res.header("Access-Control-Allow-Origin", "*");
+// 	res.header(
+// 		"Access-Control-Allow-Methods",
+// 		"GET,HEAD,OPTIONS,POST,PUT,DELETE"
+// 	);
+// 	res.header(
+// 		"Access-Control-Allow-Headers",
+// 		"auth-token,Origin, X-Requested-With, Content-Type, Accept"
+// 	);
+// 	next();
+// });
 
 //middleware
 app.use(bodyParser.json());
